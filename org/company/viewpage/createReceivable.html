@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  </head>
+
+  <body>
+    <div class="c_container">      
+      <h1>createCar Page</h1>      
+    </div>
+    
+    <div class="c_container">        
+        Seller.Number <input type="text" id=inp_sellerno> <button id="btn_querySellerRept">Query a Receipt</button> <br>
+        <div id="reptresultwindow">
+          <table id="sellerReptTbl" width="100%" class="table table-bordered table-hover text-center">
+            <thead>
+              <tr>
+                <th>Select</th>
+                <th>Rept.Number</th>
+                <th>Item.Number</th>
+                <th>SellerName</th>
+                <th>BuyerName</th>
+                <th>TotalPrice</th>
+                <th>DueDate</th>
+              </tr>
+            </thead>
+            <tbody id="sellerReptTbody">
+            </tbody>
+          </table>
+        </div>
+        Recv.Number <input type="text" id="inp_recvnumber"> <br>
+        Recv.IssueRate <input type="text" id=inp_issuerate> <br>
+        Recv.PublishDate <input type="date" id=inp_publishdate> <br>
+        Recv.ExpireDate <input type="date" id=inp_expiredate> <br>        
+        Recv.IsGuarantee <input type="checkbox" id="inp_isguarantee" > <br>
+        Recv.IsSale <input type="checkbox" id="inp_issale" > <br>
+        <button id="btn_createReceivable">Create a Receivable</button>
+        <div id="resultwindow">
+            <h2>Fabcar Query Result</h2>
+            <div id="queryresult">
+                <p>whatwhat</p>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function() {
+    var date = new Date();
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+
+    if (month < 10) month = "0" + month;
+    if (day < 10) day = "0" + day;
+
+    var today = year + "-" + month + "-" + day;
+    $("#inp_publishdate").attr("value", today);
+  })
+    $("#reptresultwindow").hide()
+    $("#resultwindow").hide()
+    $("#btn_querySellerRept").click(function(){
+      const _sellerno = $("#inp_sellerno").val()
+      $.post("/api/querySellerRept", {sellerno: _sellerno}, function(data, status){
+        $("#reptresultwindow").show()
+        $("#sellerReptTbody").empty()
+        for(var i=0; i < data.length; i++){
+          var html='';
+          var radiostr=JSON.stringify(data[i].Key).replace(/"/g,"")
+          html += '<tr>';
+          html += '<td><input type="radio" id="radio_'+radiostr+'" name="group" /></td>';
+          html += '<td>'+JSON.stringify(data[i].Key)+'</td>';
+          html += '<td>'+JSON.stringify(data[i].Record.ItemKey)+'</td>';
+          html += '<td>'+JSON.stringify(data[i].Record.sellername)+'</td>';
+          html += '<td>'+JSON.stringify(data[i].Record.buyername)+'</td>';
+          html += '<td>'+JSON.stringify(data[i].Record.totalprice)+'</td>';
+          html += '<td>'+JSON.stringify(data[i].Record.duedate)+'</td>';
+          html += '</tr>';
+          $("#sellerReptTbody").append(html);
+          $("input[name=group]").click(function(){
+            var selectbox = $("input[name=group]:checked");
+            var tr = selectbox.parent().parent().eq(0);
+            var td = tr.children();
+            $("#inp_expiredate").attr("value", td.eq(6).text().replace(/"/g,""));
+          })
+        }
+      })
+    })
+    $("#btn_createReceivable").click(function(){
+      const _recvnumber = $("#inp_recvnumber").val()
+      var selectbox = $("input[name=group]:checked");
+      var tr = selectbox.parent().parent().eq(0);
+      var td = tr.children();
+      const _reptnumber = td.eq(1).text().replace(/\"/g,"")
+      const _ownername = td.eq(3).text().replace(/\"/g,"")
+      const _issuerate = $("#inp_issuerate").val()
+      const _publishdate = $("#inp_publishdate").val()
+      const _expiredate = $("#inp_expiredate").val()
+      const _isguarantee = $("#inp_isguarantee").is(":checked")
+      const _issale = $("#inp_issale").is(":checked")
+      $.post("/api/createReceivable", {recvnumber: _recvnumber, reptnumber: _reptnumber, ownername: _ownername, issuerate: _issuerate, publishdate: _publishdate, expiredate: _expiredate, isguarantee: _isguarantee, issale: _issale}, function(data, status){
+        $("#resultwindow").show()
+        $("#queryresult").empty()
+        $("#queryresult").append(status)
+        $("#queryresult").append("<br>")
+      })
+    })
+</script>

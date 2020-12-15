@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  </head>
+
+  <body>
+    <div class="c_container">      
+      <h1>createCar Page</h1>      
+    </div>
+    
+    <div class="c_container">        
+        ReceiptNumber <input type="text" id=inp_reptno> <br>
+        Item.Number <input type="text" id=inp_itemno> <br>
+        Item.Price <span id="span_item_price"></span> <br>
+        Rept.SellerName <span id="span_sellername"></span> <br>
+        Rept.BuyerName <input type="text" id=inp_buyername> <br>
+        Rept.Num Of Product <input type="text" id=inp_numproduct> <br>
+        Rept.Total Price <span id="span_totalprice"></span> <br>
+        Rept.Selldate <input type="date" id="inp_selldate"> <br>
+        Rept.Duedate <input type="date" id="inp_duedate"> <br>
+        <button id="btn_itemBuy">Buy a Item</button>
+        
+        <div id="resultwindow">
+            <h2>Fabcar Query Result</h2>
+            <div id="queryresult">
+                <p>whatwhat</p>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
+
+<script>
+    $(document).ready(function() {
+      var date = new Date();
+
+      var day = date.getDate();
+      var month = date.getMonth() + 1;
+      var year = date.getFullYear();
+
+      if (month < 10) month = "0" + month;
+      if (day < 10) day = "0" + day;
+
+      var today = year + "-" + month + "-" + day;       
+      $("#selldate").attr("value", today);
+    });
+    $("#resultwindow").hide()
+    $("#inp_itemno").focusout(function() {
+        const _itemno = $("#inp_itemno").val()
+        $.post("/api/querySellItemPrice", {itemno: _itemno}, function(data, status){
+          $("#span_item_price").empty()            
+          $("#span_sellername").empty()
+          $("#span_item_price").append(JSON.stringify(data.price))
+          $("#span_sellername").append(JSON.stringify(data.seller))
+        })
+    })
+    $("#inp_numproduct").focusout(function() {
+        if ( $("#span_item_price").text == "" ) {
+          $('#inp-itemno').focus();
+        }
+        $("#span_totalprice").empty()
+        var itemprice = Number($("#span_item_price").text())
+        var numproduct = Number($("#inp_numproduct").val())
+        $("#span_totalprice").append(itemprice * numproduct)
+    })
+    $("#btn_itemBuy").click(function(){
+        const _reptno = $("#inp_reptno").val()
+        const _itemno = $("#inp_itemno").val()
+        const _sellername = $("#span_sellername").text().replace(/\"/g, "")
+        const _buyername = $("#inp_buyername").val()
+        const _numproduct = $("#inp_numproduct").val()
+        const _totalprice = $("#span_totalprice").text()
+        const _selldate = $("#inp_selldate").val()
+        const _duedate = $("#inp_duedate").val()
+        $.post("/api/createSellReceipt",{reptno: _reptno, itemno: _itemno, sellername: _sellername, buyername: _buyername, numproduct: _numproduct, totalprice: _totalprice, selldate: _selldate, duedate: _duedate } ,function(data, status){            
+            $("#resultwindow").show()
+            $("#queryresult").empty()            
+            $("#queryresult").append(status)
+            $("#queryresult").append("<br>")
+        })
+    })
+</script>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  </head>
+
+  <body>
+    <div class="c_container">      
+      <h1>create Company Page</h1>      
+    </div>
+    
+    <div class="c_container">        
+        Company.Number <input type="text" id=inp_companyno> <br>
+        Company.Name <input type="text" id=inp_companyname> <br>
+        Company.Token <input type="text" id=inp_companytoken> <br>
+        <button id="btn_createCompany">Create a Company</button>
+        
+        <div id="resultwindow">
+            <h2>Fabcar Query Result</h2>
+            <div id="queryresult">
+                <p>whatwhat</p>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
+
+<script>
+    $("#resultwindow").hide()
+    $("#btn_createCompany").click(function(){
+        const _companyno = $("#inp_companyno").val()
+        const _companyname = $("#inp_companyname").val()
+        const _companytoken = $("#inp_companytoken").val()
+        const _orgclass = "Company"
+        $.post("/api/createCompany",{companyno: _companyno, companyname: _companyname, companytoken: _companytoken, orgclass: _orgclass} ,function(data, status){            
+            $("#resultwindow").show()
+            $("#queryresult").empty()            
+            $("#queryresult").append(status)
+            $("#queryresult").append("<br>")
+        })
+    })
+</script>

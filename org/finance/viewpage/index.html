@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  </head>
+
+  <body>
+    <div class="c_container">      
+      <h1>Welcome! Fabcar!</h1>
+      <p>Select A Nextpage</p>      
+    </div>
+
+    <div class="c_container">
+      <button id="btn_reqBuyPurchase">Request Purchase a Receivable</button><!--채권을 구입한다.-->
+      <br>
+      <button id="btn_reqRecv">Request a grading Receivable</button><!--채권평가를 맡긴다-->
+      <br>
+      <button id="btn_checkRecv">Check buy Receivable</button><!--구입한 채권을 확인한다.-->
+      <br>
+      <button id="btn_updateSale">Resell a Receivable</button><!--채권을 재판매한다.-->
+      <br>
+     
+    </div>
+  </body>
+</html>
+
+<script>
+    $("#btn_reqBuyPurchase").click(function(){
+    location.href = './page/createReqPurchase';
+   })
+    $("#btn_reqRecv").click(function(){    
+        location.href = './page/reqRecvEval';
+    })
+    $("#btn_checkRecv").click(function(){    
+        location.href = './page/checkBuyRecv';
+    })
+    $("#btn_updateSale").click(function(){    
+        location.href = './page/updateSale';
+    })
+
+</script>

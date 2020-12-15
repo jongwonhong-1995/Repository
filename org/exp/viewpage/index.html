@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  </head>
+
+  <body>
+    <div class="c_container">      
+      <h1>Welcome! Fabcar!</h1>
+      <p>Select A Nextpage</p>      
+    </div>
+
+    <div class="c_container">
+        <button id="btn_queryAllItems">Query All Items</button>
+        <br>
+        <button id="btn_queryAllOrgs">Query All Org</button>
+        <br>
+        <button id="btn_queryAllBuyers">Query All Buyers</button>
+        <br>
+        <button id="btn_queryAllCompanys">Query All Companys</button>
+        <br>
+        <button id="btn_queryAllGrades">Query All Grades</button>
+        <br>
+        <button id="btn_queryAllFinances">Query All Finances</button>
+        <br>
+        <button id="btn_queryAllReceipts">Query All Receipts</button>
+        <br>
+        <button id="btn_queryAllReceivables">Query All Receivables</button>
+        <br>
+        <button id="btn_queryAllRecvRatings">Query All Receivables Ratings</button>
+    </div>
+  </body>
+</html>
+
+<script>
+    $("#btn_queryAllItems").click(function(){
+        location.href = 'api/queryAllItems';
+    })
+    $("#btn_queryAllOrgs").click(function(){
+        location.href = 'api/queryAllOrgs';
+    })
+    $("#btn_queryAllBuyers").click(function(){
+        location.href = 'api/queryAllBuyers';
+    })
+    $("#btn_queryAllCompanys").click(function(){
+        location.href = 'api/queryAllCompanys';
+    })
+    $("#btn_queryAllGrades").click(function(){
+        location.href = 'api/queryAllGrades';
+    })
+    $("#btn_queryAllFinances").click(function(){
+        location.href = 'api/queryAllFinances';
+    })
+    $("#btn_queryAllReceipts").click(function(){
+        location.href = 'api/queryAllReceipts';
+    })
+    $("#btn_queryAllReceivables").click(function(){
+        location.href = 'api/queryAllReceivables';
+    })
+    $("#btn_queryAllRecvRatings").click(function(){
+        location.href = 'api/queryAllRecvRatings';
+    })
+</script>

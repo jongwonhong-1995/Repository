@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  </head>
+
+  <body>
+    <div class="c_container">      
+      <h1>create Buyer Page</h1>      
+    </div>
+    
+    <div class="c_container">        
+        Buyer.Number <input type="text" id=inp_buyerno> <br>
+        Buyer.Name <input type="text" id=inp_buyername> <br>
+        Buyer.Token <input type="text" id=inp_buyertoken> <br>
+        <button id="btn_createBuyer">Create a Buyer</button>
+        
+        <div id="resultwindow">
+            <h2>Fabcar Query Result</h2>
+            <div id="queryresult">
+                <p>whatwhat</p>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
+
+<script>
+    $("#resultwindow").hide()
+    $("#btn_createBuyer").click(function(){
+        const _buyerno = $("#inp_buyerno").val()
+        const _buyername = $("#inp_buyername").val()
+        const _buyertoken = $("#inp_buyertoken").val()
+        const _orgclass = "Buyer"
+        alert(_buyername);
+        $.post("api/createBuyer",{buyerno: _buyerno, buyername: _buyername, buyertoken: _buyertoken, orgclass: _orgclass} ,function(data, status){ 
+            $("#resultwindow").show()
+            $("#queryresult").empty()            
+            $("#queryresult").append(status)
+            $("#queryresult").append("<br>")
+        })
+    })
+</script>

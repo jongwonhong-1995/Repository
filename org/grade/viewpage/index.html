@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  </head>
+
+  <body>
+    <div class="c_container">      
+      <h1>Welcome! Fabcar!</h1>
+      <p>Select A Nextpage</p>      
+    </div>
+
+    <div class="c_container">
+        <button id="btn_createGrade">Create Grade</button>
+        <br>
+        <button id="btn_queryAllGrades">Query All Grades</button>
+        <br>
+        <button id="btn_checkRecv">Check Account Receivable</button>
+        <br>
+        <button id="btn_evalRecv">Evaluate Account Receivable</button>
+        <br>
+    </div>
+  </body>
+</html>
+
+<script>
+    $("#btn_createGrade").click(function(){
+        location.href = './page/createGrade';
+    })
+    $("#btn_queryAllGrades").click(function(){
+        location.href = './page/queryAllGrades';
+    })
+    $("#btn_checkRecv").click(function(){
+        location.href = './page/checkRecv';
+    })
+    $("#btn_evalRecv").click(function(){
+        location.href = './page/evalRecv';
+    })
+</script>

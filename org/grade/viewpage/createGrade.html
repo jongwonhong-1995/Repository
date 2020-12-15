@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  </head>
+
+  <body>
+    <div class="c_container">      
+      <h1>create Grade Page</h1>      
+    </div>
+    
+    <div class="c_container">        
+        Grade.Number <input type="text" id=inp_gradeno> <br>
+        Grade.Name <input type="text" id=inp_gradeName> <br>
+        Grade.Token <input type="text" id=inp_gradeToken> <br>
+
+        <button id="btn_createGrade">Create a Grade</button>
+        
+        <div id="resultwindow">
+            <h2>Fabcar Query Result</h2>
+            <div id="queryresult">
+                <p>whatwhat</p>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
+
+<script>
+    $("#resultwindow").hide()
+    $("#btn_createGrade").click(function(){
+        const _gradeno = $("#inp_gradeno").val()
+        const _gradename = $("#inp_gradeName").val()
+        const _gradetoken = $("#inp_gradeToken").val()
+        const _orgclass = "Grade"
+
+        console.log('ddd')
+        $.post("/api/createGrade",{gradeno: _gradeno, gradename: _gradename, gradetoken: _gradetoken, orgclass: _orgclass} ,function(data, status){ 
+            $("#resultwindow").show()
+            $("#queryresult").empty()            
+            $("#queryresult").append(status)
+            $("#queryresult").append("<br>")
+        })
+    })
+</script>

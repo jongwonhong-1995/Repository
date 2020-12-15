@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  </head>
+
+  <body>
+    <div class="c_container">      
+      <h1>Eval Recv Page</h1>      
+    </div>
+    
+    <div class="c_container">        
+        Eval.Num <input type="text" id=inp_evalnum> <br>
+        Grade.Name <input type="text" id=inp_gradename> <br>
+        Recv.Num <input type="text" id=inp_recvnum> <br>
+        <button id="btn_reqRecvEval">Request Eval to Grade</button>
+        
+        <div id="resultwindow">
+            <h2>Fabcar Query Result</h2>
+            <div id="queryresult">
+                <p>whatwhat</p>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
+
+<script>
+    $("#resultwindow").hide()
+    $("#btn_reqRecvEval").click(function(){
+        const _evalnum = $("#inp_evalnum").val()
+        const _gradename = $("#inp_gradename").val()
+        const _recvnum = $("#inp_recvnum").val()
+
+        $.post("/api/reqRecvEval",{evalnum: _evalnum, gradename: _gradename, recvnum: _recvnum} ,function(data, status){            
+            $("#resultwindow").show()
+            $("#queryresult").empty()            
+            $("#queryresult").append(status)
+            $("#queryresult").append("<br>")
+        })
+    })
+</script>
